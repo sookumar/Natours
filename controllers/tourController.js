@@ -1,14 +1,14 @@
 const fs = require('fs');
 
 const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
+  fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`),
 );
 
 /* =====================
    PARAM MIDDLEWARE
 ===================== */
 exports.checkID = (req, res, next, val) => {
-    console.log(`Tour id is: ${val}`);
+  console.log(`Tour id is: ${val}`);
   const id = Number(val);
   const tour = tours.find((el) => el.id === id);
 
@@ -22,14 +22,14 @@ exports.checkID = (req, res, next, val) => {
   next();
 };
 
-exports.checkBody = (req, res, next)=>{
-    if(!req.body.price || !req.body.name){
-      return res.status(400).json({
-        status: 'fail',
-        message: 'Missing name or price'
-      })
-    }
-    next();
+exports.checkBody = (req, res, next) => {
+  if (!req.body.price || !req.body.name) {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'Missing name or price',
+    });
+  }
+  next();
 };
 /* =====================
    GET ALL TOURS
@@ -54,7 +54,7 @@ exports.getTour = (req, res) => {
   res.status(200).json({
     status: 'success',
     data: {
-      tour
+      tour,
     },
   });
 };
@@ -78,7 +78,7 @@ exports.createTour = (req, res) => {
           tour: newTour,
         },
       });
-    }
+    },
   );
 };
 
@@ -101,7 +101,7 @@ exports.updateTour = (req, res) => {
           tour,
         },
       });
-    }
+    },
   );
 };
 
@@ -122,6 +122,6 @@ exports.deleteTour = (req, res) => {
         status: 'success',
         data: null,
       });
-    }
+    },
   );
 };
