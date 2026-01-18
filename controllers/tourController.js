@@ -84,7 +84,7 @@ exports.updateTour = async (req, res) => {
       },
     });
   } catch (err) {
-    res.status.json({
+    res.status(404).json({
       status: 'fail',
       message: err,
     });
@@ -94,18 +94,19 @@ exports.updateTour = async (req, res) => {
 /* =====================
    DELETE TOUR
 ===================== */
-exports.deleteTour = (req, res) => {
-  // const id = Number(req.params.id);
-  // const index = tours.findIndex((el) => el.id === id);
-  // tours.splice(index, 1);
-  // fs.writeFile(
-  //   `${__dirname}/../dev-data/data/tours-simple.json`,
-  //   JSON.stringify(tours),
-  //   () => {
-  //     res.status(204).json({
-  //       status: 'success',
-  //       data: null,
-  //     });
-  //   },
-  // );
+exports.deleteTour = async (req, res) => {
+  try {
+    await Tour.findByIdAndDelete(req.params.id);
+    res.status(204).json({
+      status: 'success',
+      data: {
+        tour: null,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
 };
