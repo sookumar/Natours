@@ -1,5 +1,4 @@
 const Tour = require('../models/tourModel');
-
 // const tours = JSON.parse(
 //   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`),
 // );
@@ -12,6 +11,7 @@ exports.getAllTours = async (req, res) => {
     const queryObj = { ...req.query };
     const excludedFields = ['page', 'sort', 'limit', 'fields'];
     excludedFields.forEach((el) => delete queryObj[el]);
+    console.log(queryObj);
 
     // Advanced filtering
     let queryStr = JSON.stringify(queryObj);
@@ -39,6 +39,7 @@ exports.getAllTours = async (req, res) => {
   } catch (err) {
     res.status(404).json({
       status: 'fail',
+      message: err,
     });
   }
 };

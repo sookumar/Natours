@@ -18,6 +18,7 @@ app.use((req, res, next) => {
   console.log('Hello from the middleware 👋');
   next();
 });
+app.set('query parser', 'extended');
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
