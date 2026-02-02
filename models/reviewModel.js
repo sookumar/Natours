@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 
 const reviewSchema = new mongoose.Schema(
   {
-    name: { String, required: [true, 'User must have a name for review'] },
     review: {
       type: String,
       required: [true, 'user must write a review'],
