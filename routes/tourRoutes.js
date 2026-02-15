@@ -33,6 +33,13 @@ router
     authController.restrictTo('admin', 'lead-guide', 'guide'),
     tourController.getMonthlyPlan,
   );
+
+router
+  .route('/tours-within/:distance/center/:latlng/unit/:unit')
+  .get(tourController.getTourWithin);
+// /tours-within?distance=233&center=-40,45&unit=mi this is query strings way
+// /tours-within/233/center/-40,45/unit/mi
+
 router
   .route('/')
   .get(tourController.getAllTours)
