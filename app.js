@@ -26,8 +26,31 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Set security HTTP Headers
-app.use(helmet());
-
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: [
+        "'self'",
+        'https://maps.googleapis.com',
+        'https://maps.gstatic.com',
+      ],
+      connectSrc: [
+        "'self'",
+        'https://maps.googleapis.com',
+        'https://maps.gstatic.com',
+      ],
+      imgSrc: ["'self'", 'data:', 'https://maps.gstatic.com'],
+      styleSrc: [
+        "'self'",
+        'https://fonts.googleapis.com',
+        'https://maps.googleapis.com',
+        "'unsafe-inline'",
+      ],
+      fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+    },
+  }),
+);
 // Development logging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
