@@ -39,8 +39,17 @@ app.use(
         "'self'",
         'https://maps.googleapis.com',
         'https://maps.gstatic.com',
+        'https://*.googleapis.com',
+        'https://*.gstatic.com',
       ],
-      imgSrc: ["'self'", 'data:', 'https://maps.gstatic.com'],
+      imgSrc: [
+        "'self'",
+        'data:',
+        'https://maps.googleapis.com',
+        'https://maps.gstatic.com',
+        'https://*.googleapis.com',
+        'https://*.gstatic.com',
+      ],
       styleSrc: [
         "'self'",
         'https://fonts.googleapis.com',
