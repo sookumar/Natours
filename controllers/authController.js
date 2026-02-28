@@ -210,3 +210,40 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
   createSendToken(user, 201, res);
 });
+
+// Only for rendered pages, no errors!
+exports.isLoggedIn = catchAsync(async (req, res, next) => {
+  if (req.cookies.jwt) {
+    // 1) Verification of token
+    const decoded = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRET,
+    );
+
+    // 2) Check if user still exists
+    const currUser = await User.findById(decoded.id);
+    if (!currUser) return next();
+
+    // 3) Check if user changed password after jwt token was issue
+    if (currUser.changedPasswordAfter(decoded.iat)) {
+      return next(new AppError());
+    }
+
+    // There is a Logged in USER
+    res.locals.user = currUser;
+    return next();
+  }
+  next();
+});
+
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    // roles ['admin','lead-guide']. role = 'user'
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError('You do not have permission to perform this action', 403),
+      );
+    }
+    next();
+  };
+};
