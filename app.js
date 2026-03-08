@@ -27,6 +27,19 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Set security HTTP Headers
+const cspConnectSrc = [
+  "'self'",
+  'http://127.0.0.1:8000',
+  'https://maps.googleapis.com',
+  'https://maps.gstatic.com',
+  'https://*.googleapis.com',
+  'https://*.gstatic.com',
+  'https://cdnjs.cloudflare.com',
+];
+
+if (process.env.NODE_ENV === 'development') {
+  cspConnectSrc.push('ws://localhost:*', 'ws://127.0.0.1:*', 'ws:');
+}
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
@@ -38,15 +51,7 @@ app.use(
         "'unsafe-inline'",
         'https:',
       ],
-      connectSrc: [
-        "'self'",
-        'http://127.0.0.1:8000',
-        'https://maps.googleapis.com',
-        'https://maps.gstatic.com',
-        'https://*.googleapis.com',
-        'https://*.gstatic.com',
-        'https://cdnjs.cloudflare.com',
-      ],
+      connectSrc: cspConnectSrc,
       imgSrc: [
         "'self'",
         'data:',

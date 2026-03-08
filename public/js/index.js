@@ -11,12 +11,11 @@ const map = document.getElementById('map');
 if (map) {
   const locations = JSON.parse(map.dataset.locations);
   console.log(locations);
+  displayMap(locations);
 }
 
-displayMap(locations);
-
 const loginForm = document.querySelector('.form');
-if (form) {
+if (loginForm) {
   loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const email = document.getElementById('email').value;
